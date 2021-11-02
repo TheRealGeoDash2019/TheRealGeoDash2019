@@ -2,6 +2,6 @@
 
 <p float="left"> 
 
- <img src="https://github-readme-stats.vercel.app/api?username=TheRealGeoDash2019&show_icons=true&theme=dark" height="200"><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TheRealGeoDash2019&layout=compact&theme=dark" height="200"> 
+ <img src="https://github-readme-stats.vercel.app/api?username=TheRealGeoDash2019&show_icons=true&theme=dark" height="200"><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TheRealGeoDash2019&layout=compact&theme=dark" height="200"><img src="https://details.geomusic.tech/guilds/813439825692327968/users/710268763844640839/auto">
 
 </p>
