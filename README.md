@@ -5,5 +5,10 @@
  <img src="https://github-readme-stats.vercel.app/api?username=TheRealGeoDash2019&show_icons=true&theme=dark" height="200"><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TheRealGeoDash2019&layout=compact&theme=dark" height="200">
 
 </p>
-<a href="https://blocked-goguardian.cf">Placeholder</a>
-<a href="https://mcsd.instructure.com">_</a>
+
+Other
+-----
+<a href="https://blocked-goguardian.cf">RH Link</a><br>
+<a href="https://blocked-goguardian.tk">RH Link #2</a><br>
+<a href="https://rh.lwaid.dev">RH Link #3</a><br>
+<a href="https://rh.lhost.dev">RH Link #4</a><br>
