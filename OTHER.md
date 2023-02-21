@@ -7,6 +7,7 @@ Links
 <a href="https://vscode.dev">VSCode</a><br>
 <a href="https://google.com">Google</a><br>
 <a href="https://youtube.com">YouTube</a><br>
+
 Dedicated Links
 -----
 <a href="https://blocked-goguardian.cf">RH #1</a><br>
