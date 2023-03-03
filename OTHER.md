@@ -16,5 +16,5 @@ Dedicated Links
 <a href="https://rh.lhost.dev">RH #4</a><br>
 <a href="https://student.lhost.dev">RH #5</a><br>
 <a href="https://teacher.lhost.dev">RH #6</a><br>
-<a href="https://goguardian.lhost.dev">RH #7</a>
+<a href="https://goguardian.lhost.dev">RH #7</a><br>
 <a href="https://panel.lhost.dev">RH #8</a>
