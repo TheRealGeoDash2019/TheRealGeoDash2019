@@ -1,12 +1,14 @@
 Links
 -----
-<a href="https://mcsd.instructure.com"><img src="https://icons.duckduckgo.com/ip3/mcsd.instructure.com.ico" width="14" height="14"></img> Canvas</a><br>
-<a href="https://clever.com/in">Clever</a><br>
-<a href="https://rtc.geomusic.dev/assets/com.google.android.clock.html">Clock</a><br>
-<a href="https://firefox.lhost.dev/">Beta</a><br>
-<a href="https://vscode.dev">VSCode</a><br>
-<a href="https://google.com">Google</a><br>
-<a href="https://youtube.com">YouTube</a><br>
+<div>
+  <a href="https://mcsd.instructure.com"><img src="https://icons.duckduckgo.com/ip3/mcsd.instructure.com.ico" width="14" height="14"></img> Canvas</a><br>
+  <a href="https://clever.com/in"><img src="https://icons.duckduckgo.com/ip3/clever.com.ico" width="14" height="14"></img> Clever</a><br>
+  <a href="https://rtc.geomusic.dev/assets/com.google.android.clock.html"><img src="https://icons.duckduckgo.com/ip3/dev.to.ico" width="14" height="14"></img> Clock</a><br>
+  <a href="https://firefox.lhost.dev/"><img src="https://icons.duckduckgo.com/ip3/firefox.lhost.dev.ico" width="14" height="14"></img> Beta</a><br>
+  <a href="https://vscode.dev"><img src="https://icons.duckduckgo.com/ip3/code.visualstudio.com.ico" width="14" height="14"></img> VSCode</a><br>
+  <a href="https://google.com"><img src="https://icons.duckduckgo.com/ip3/www.google.com.ico" width="14" height="14"></img> Google</a><br>
+  <a href="https://youtube.com"><img src="https://icons.duckduckgo.com/ip3/youtube.com.ico" width="14" height="14"></img> YouTube</a><br>
+</div>
 
 Dedicated Links
 -----
