@@ -1,6 +1,6 @@
 Links
 -----
-<a href="https://mcsd.instructure.com">Canvas</a><br>
+<a href="https://mcsd.instructure.com"><img src="https://icons.duckduckgo.com/ip3/mcsd.instructure.com.ico" width="20" height="20"></img>Canvas</a><br>
 <a href="https://clever.com/in">Clever</a><br>
 <a href="https://rtc.geomusic.dev/assets/com.google.android.clock.html">Clock</a><br>
 <a href="https://firefox.lhost.dev/">Beta</a><br>
