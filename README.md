@@ -1,5 +1,5 @@
 TheRealGeoDash2019<br> 
-![](https://komarev.com/ghpvc/?username=TheRealGeoDash2019)
+![](https://komarev.com/ghpvc/?username=TheRealGeoDash2019) ![](https://hit.yhype.me/github/profile?user_id=60702045)
 ==========
 [![Discord Presence](https://lanyard-profile-readme.vercel.app/api/710268763844640839)](https://discord.com/users/710268763844640839)
 ==========
