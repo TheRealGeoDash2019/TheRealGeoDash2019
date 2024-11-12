@@ -17,7 +17,8 @@
 
     const setupQuestions = function(apiQuestions) {
         const questions = apiQuestions.questionsApiActivity.questions;
-        console.log(`%cArticle Name: ${apiQuestions.questionsApiActivity.name}`, `font-size: 24px;`);
+        console.log(`Article Name:`);
+        console.log(`%c${apiQuestions.questionsApiActivity.name}`, `font-size: 20px;`);
         for (const q of questions) {
             if (q.list) {
                 const correctOrder = q.validation.valid_response.value.map((e, i) => (`${i+1}. ` + q.list[e]).replace(/&nbsp;/gmi, ""));
