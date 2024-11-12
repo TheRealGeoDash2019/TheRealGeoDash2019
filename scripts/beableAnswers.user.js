@@ -17,18 +17,17 @@
 
     const setupQuestions = function(apiQuestions) {
         const questions = apiQuestions.questionsApiActivity.questions;
-        console.log(`Article Name:`);
         console.log(`%c${apiQuestions.questionsApiActivity.name}`, `font-size: 20px;`);
         for (const q of questions) {
             if (q.list) {
                 const correctOrder = q.validation.valid_response.value.map((e, i) => (`${i+1}. ` + q.list[e]).replace(/&nbsp;/gmi, ""));
-                console.log("%c"+q.stimulus+"\n\n%c"+correctOrder.join("\n"), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
+                console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c"+correctOrder.join("\n"), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
             } else if (q.type === "tokenhighlight") {
                 const correctSentences = q.validation.valid_response.value;
                 const correctAnswers = Array.from(new DOMParser().parseFromString(q.template, "text/html").querySelectorAll(`span`)).map(e => e.childNodes[0].textContent).filter((e, i) => correctSentences.includes(i)).join("\n\n- ");
-                console.log("%c"+q.stimulus+"\n\n%c-"+correctAnswers, `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
+                console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c-"+correctAnswers, `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
             } else if (q.type === "mcq") {
-                console.log("%c"+q.stimulus+"\n\n%c- "+q.options.map(e => e.label).map((e, i) => (q.validation.valid_response.value.includes(i.toString())? e.replace(/&nbsp;/gmi, "") : null)).filter(e => e).join("\n- "), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`)
+                console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c- "+q.options.map(e => e.label).map((e, i) => (q.validation.valid_response.value.includes(i.toString())? e.replace(/&nbsp;/gmi, "") : null)).filter(e => e).join("\n- "), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`)
             }
         }
     };
