@@ -20,9 +20,13 @@
         for (const q of questions) {
             if (q.list) {
                 const correctOrder = q.validation.valid_response.value.map((e, i) => (`${i+1}. ` + q.list[e]).replace(/&nbsp;/gmi, ""));
-                console.log(q.stimulus+"\n"+correctOrder.join("\n"));
-            } else {
-                console.log(q.stimulus+"\n- "+q.options.map(e => e.label).map((e, i) => (q.validation.valid_response.value.includes(i.toString())? e.replace(/&nbsp;/gmi, "") : null)).filter(e => e).join("\n- "))
+                console.log(q.stimulus+"\n\n"+correctOrder.join("\n"));
+            } else if (q.type === "tokenhighlight") {
+                const correctSentences = q.validation.valid_response.value;
+                const correctAnswers = Array.from(new DOMParser().parseFromString(temp2.question.template, "text/html").querySelectorAll(`span`)).map(e => e.childNodes[0].textContent).filter((e, i) => correctSentences.includes(i)).join("\n\n- ");
+                console.log(q.stimulus+"\n\n-"+correctAnswers);
+            } else if (q.type === "mcq") {
+                console.log(q.stimulus+"\n\n- "+q.options.map(e => e.label).map((e, i) => (q.validation.valid_response.value.includes(i.toString())? e.replace(/&nbsp;/gmi, "") : null)).filter(e => e).join("\n- "))
             }
         }
     };
