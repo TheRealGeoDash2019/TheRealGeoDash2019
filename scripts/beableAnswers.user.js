@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Beable Answers
 // @namespace    http://tampermonkey.net/
-// @version      0.0.0
+// @version      0.0.1
 // @description  Get free legit answers on Beable using Ancient Chinese Technique
 // @author       TheRealGeoDash
 // @match        *://*.beable.com/*
@@ -19,10 +19,10 @@
         const questions = apiQuestions.questionsApiActivity.questions;
         for (const q of questions) {
             if (q.list) {
-                const correctOrder = q.validation.valid_response.value.map((e, i) => (`${i+1}. ` + q.list[e]));
+                const correctOrder = q.validation.valid_response.value.map((e, i) => (`${i+1}. ` + q.list[e]).replace(/&nbsp;/gmi, ""));
                 console.log(q.stimulus+"\n"+correctOrder.join("\n"));
             } else {
-                console.log(q.stimulus+"\n- "+q.options.map(e => e.label).map((e, i) => (q.validation.valid_response.value.includes(i.toString())? e : null)).filter(e => e).join("\n- "))
+                console.log(q.stimulus+"\n- "+q.options.map(e => e.label).map((e, i) => (q.validation.valid_response.value.includes(i.toString())? e.replace(/&nbsp;/gmi, "") : null)).filter(e => e).join("\n- "))
             }
         }
     };
