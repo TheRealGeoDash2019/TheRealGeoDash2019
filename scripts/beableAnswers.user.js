@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Beable Answers
 // @namespace    http://tampermonkey.net/
-// @version      0.0.3
+// @version      0.0.4
 // @description  Get free legit answers on Beable using Ancient Chinese Technique
 // @author       TheRealGeoDash
 // @match        *://*.beable.com/*
@@ -17,16 +17,17 @@
 
     const setupQuestions = function(apiQuestions) {
         const questions = apiQuestions.questionsApiActivity.questions;
+        console.log(`%cArticle Name: ${apiQuestions.questionsApiActivity.name}`, `font-size: 24px;`);
         for (const q of questions) {
             if (q.list) {
                 const correctOrder = q.validation.valid_response.value.map((e, i) => (`${i+1}. ` + q.list[e]).replace(/&nbsp;/gmi, ""));
-                console.log(q.stimulus+"\n\n"+correctOrder.join("\n"));
+                console.log(q.stimulus+"\n\n%c"+correctOrder.join("\n"), `color: #44ff44; font-weight: bolder;`);
             } else if (q.type === "tokenhighlight") {
                 const correctSentences = q.validation.valid_response.value;
                 const correctAnswers = Array.from(new DOMParser().parseFromString(q.template, "text/html").querySelectorAll(`span`)).map(e => e.childNodes[0].textContent).filter((e, i) => correctSentences.includes(i)).join("\n\n- ");
-                console.log(q.stimulus+"\n\n-"+correctAnswers);
+                console.log(q.stimulus+"\n\n%c-"+correctAnswers, `color: #44ff44; font-weight: bolder;`);
             } else if (q.type === "mcq") {
-                console.log(q.stimulus+"\n\n- "+q.options.map(e => e.label).map((e, i) => (q.validation.valid_response.value.includes(i.toString())? e.replace(/&nbsp;/gmi, "") : null)).filter(e => e).join("\n- "))
+                console.log(q.stimulus+"\n\n%c- "+q.options.map(e => e.label).map((e, i) => (q.validation.valid_response.value.includes(i.toString())? e.replace(/&nbsp;/gmi, "") : null)).filter(e => e).join("\n- "), `color: #44ff44; font-weight: bolder;`)
             }
         }
     };
