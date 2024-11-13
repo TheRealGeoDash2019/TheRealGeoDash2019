@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Beable Answers
 // @namespace    http://tampermonkey.net/
-// @version      0.0.7
+// @version      0.0.10
 // @description  Get free legit answers on Beable using Ancient Chinese Technique
 // @author       TheRealGeoDash
 // @match        *://*.beable.com/*
@@ -14,20 +14,93 @@
 
 (function() {
     'use strict';
-
+    document.textSelector = function(selector, text) {
+        var elements = document.querySelectorAll(selector);
+        return Array.prototype.filter.call(elements, function(element){
+            return RegExp(text).test(element.textContent);
+        });
+    };
+    document.awaitSelector = function(selector) {
+        return new Promise(resolve => {
+            if (document.querySelector(selector)) {
+                return resolve(document.querySelector(selector));
+            }
+            const observer = new MutationObserver(mutations => {
+                if (document.querySelector(selector)) {
+                    resolve(document.querySelector(selector));
+                    observer.disconnect();
+                }
+            });
+            observer.observe(document.querySelector("html"), {
+                childList: true,
+                subtree: true
+            });
+        });
+    };
     const setupQuestions = function(apiQuestions) {
         const questions = apiQuestions.questionsApiActivity.questions;
         console.log(`%c${apiQuestions.questionsApiActivity.name}`, `font-size: 20px;`);
         for (const q of questions) {
             if (q.list) {
                 const correctOrder = q.validation.valid_response.value.map((e, i) => (`${i+1}. ` + q.list[e]).replace(/&nbsp;/gmi, ""));
+                const mu = new MutationObserver(function() {
+                    document.awaitSelector("div.lrn_question").then(async () => {
+                        let colorKey = ["", "#eb403444", "#eb8c3444", "#ebcf3444", "#34eb7444"];
+                        for (const answer of correctOrder) {
+                            const element = await document.textSelector(`.lrn_dragdrop span`, answer.slice(3));
+                            const correctElem = element? element[0] : null;
+                            if (correctElem && ("style" in correctElem)) {
+                                mu.disconnect();
+                                console.log(correctElem.parentNode);
+                                correctElem.parentNode.style.background = (colorKey[parseInt(answer.slice(0, 1))]);
+                            }
+                        }
+                    })
+                });
+                mu.observe(document.querySelector(`body`), {
+                    subtree: true,
+                    childList: true,
+                });
                 console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c"+correctOrder.join("\n"), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
             } else if (q.type === "tokenhighlight") {
                 const correctSentences = q.validation.valid_response.value;
-                const correctAnswers = Array.from(new DOMParser().parseFromString(q.template, "text/html").querySelectorAll(`span`)).map(e => e.childNodes[0].textContent).filter((e, i) => correctSentences.includes(i)).join("\n\n- ");
-                console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c-"+correctAnswers, `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
+                const correctAnswers = Array.from(new DOMParser().parseFromString(q.template, "text/html").querySelectorAll(`span`)).map(e => e.childNodes[0].textContent).filter((e, i) => correctSentences.includes(i));
+                const mu = new MutationObserver(function() {
+                    document.awaitSelector("div.lrn_question").then(async () => {
+                        for (const answer of correctAnswers) {
+                            const element = await document.textSelector(`.lrn_tokenhighlight_text span`, answer);
+                            const correctElem = element? element[0] : null;
+                            if (correctElem && ("style" in correctElem)) {
+                                mu.disconnect();
+                                correctElem.style.fontWeight = "bolder";
+                            }
+                        }
+                    })
+                });
+                mu.observe(document.querySelector(`body`), {
+                    subtree: true,
+                    childList: true,
+                });
+                console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c-"+correctAnswers.join("\n\n- "), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
             } else if (q.type === "mcq") {
-                console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c- "+q.options.map(e => e.label).map((e, i) => (q.validation.valid_response.value.includes(i.toString())? e.replace(/&nbsp;/gmi, "") : null)).filter(e => e).join("\n- "), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`)
+                const correctAnswers = q.options.map(e => e.label).map((e, i) => (q.validation.valid_response.value.includes(i.toString())? e.replace(/&nbsp;/gmi, "") : null)).filter(e => e);
+                const mu = new MutationObserver(function() {
+                    document.awaitSelector("div.lrn_question").then(async () => {
+                        for (const answer of correctAnswers) {
+                            const element = await document.textSelector(`div.lrn_response_wrapper .lrn_contentWrapper`, answer);
+                            const correctElem = element? element[0] : null;
+                            if (correctElem && ("style" in correctElem)) {
+                                mu.disconnect();
+                                correctElem.style.fontWeight = "bolder";
+                            }
+                        }
+                    })
+                });
+                mu.observe(document.querySelector(`body`), {
+                    subtree: true,
+                    childList: true,
+                });
+                console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c- "+correctAnswers.join("\n- "), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
             }
         }
     };
