@@ -17,7 +17,7 @@
     document.textSelector = function(selector, text) {
         var elements = document.querySelectorAll(selector);
         return Array.prototype.filter.call(elements, function(element){
-            return RegExp(text).test(element.textContent);
+            return RegExp(text).test(element.textContent) || RegExp(text).test(element.innerHTML);
         });
     };
     document.awaitSelector = function(selector) {
