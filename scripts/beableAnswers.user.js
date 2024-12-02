@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Beable Answers
 // @namespace    http://tampermonkey.net/
-// @version      0.0.16
+// @version      0.0.18
 // @description  Get free legit answers on Beable using Ancient Chinese Technique
 // @author       TheRealGeoDash
 // @match        *://*.beable.com/*
@@ -112,7 +112,6 @@
                         const cZones = Array.from(cTable.querySelectorAll(`tbody td.lrn_dragdrop`));
                         for (const hdr of cHeader) {
                             const cAnsw = sortedItems.find(e => (e.category == hdr.innerText)) || null;
-                            console.log(cAnsw);
                             const hdrIdx = cHeader.indexOf(hdr);
                             const hdrColor = colorKey[hdrIdx];
                             hdr.style.color = hdrColor;
