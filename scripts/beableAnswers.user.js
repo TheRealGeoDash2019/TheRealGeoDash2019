@@ -101,6 +101,10 @@
                     childList: true,
                 });
                 console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c- "+correctAnswers.join("\n- "), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
+            } else if (q.type === "classification") {
+                const sortedItems = q.ui_style.column_titles.map((e, i) => ({category: e, values: q.validation.valid_response.value.map(e => e.map(e => q.possible_responses[e]))[i]}));
+                const prettied = sortedItems.map(e => ("" + e.category + "\n- " + ((e.values && e.values.length)? e.values.join("\n- ") : "[No Items in Category]")));
+                console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c"+prettied.join("\n\n"), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
             }
         }
     };
