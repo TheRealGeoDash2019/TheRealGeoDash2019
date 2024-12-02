@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Beable Answers
 // @namespace    http://tampermonkey.net/
-// @version      0.0.15
+// @version      0.0.16
 // @description  Get free legit answers on Beable using Ancient Chinese Technique
 // @author       TheRealGeoDash
 // @match        *://*.beable.com/*
@@ -111,17 +111,20 @@
                         const cHeader = Array.from(cTable.querySelectorAll(`thead [scope="col"]`));
                         const cZones = Array.from(cTable.querySelectorAll(`tbody td.lrn_dragdrop`));
                         for (const hdr of cHeader) {
-                            const cAnsw = sortedItems.find(e => (e.category == cHeader.innerText));
+                            const cAnsw = sortedItems.find(e => (e.category == hdr.innerText)) || null;
+                            console.log(cAnsw);
                             const hdrIdx = cHeader.indexOf(hdr);
                             const hdrColor = colorKey[hdrIdx];
                             hdr.style.color = hdrColor;
                             cZones[hdrIdx].style.backgroundColor = (hdrColor+"5f");
-                            for (answ of cAnsw.values) {
-                                const element = await document.textSelector(`.lrn_possibilityList.lrn_dragdrop > *`, answ);
-                                const correctElem = element? element[0] : null;
-                                if (correctElem && ("style" in correctElem)) {
-                                    mu.disconnect();
-                                    correctElem.style.color = hdrColor;
+                            if (cAnsw && ("values" in cAnsw)) {
+                                for (const answ of cAnsw.values) {
+                                    const element = await document.textSelector(`.lrn_possibilityList.lrn_dragdrop > *`, answ);
+                                    const correctElem = element? element[0] : null;
+                                    if (correctElem && ("style" in correctElem)) {
+                                        correctElem.style.backgroundColor = (hdrColor+"8f");
+                                        mu.disconnect();
+                                    }
                                 }
                             }
                         }
