@@ -158,4 +158,10 @@
             }), "*");
         });
     };
+    Object.defineProperty(unsafeWindow, "xfetch", {
+        value: bypassFetch,
+        enumerable: false,
+        configurable: false,
+        writable: false
+    });
 })();
