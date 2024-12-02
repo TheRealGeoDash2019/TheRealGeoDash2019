@@ -103,6 +103,24 @@
                 console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c- "+correctAnswers.join("\n- "), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
             } else if (q.type === "classification") {
                 const sortedItems = q.ui_style.column_titles.map((e, i) => ({category: e, values: q.validation.valid_response.value.map(e => e.map(e => q.possible_responses[e]))[i]}));
+                const mu = new MutationObserver(function() {
+                    const randomHex = ()=>("#"+Array.from(crypto.getRandomValues(new Uint8Array(3))).map(e => ((e > 200)?(e-200).toString(16).padStart(2, "0"):e.toString(16).padStart(2, "0"))).join(""));
+                    document.awaitSelector("div.lrn_question").then(async () => {
+                        const cTable = document.querySelector(`table.lrn_classification_table`);
+                        const cHeader = Array.from(cTable.querySelectorAll(`thead [scope="col"]`));
+                        const cZones = Array.from(cTable.querySelectorAll(`tbody td.lrn_dragdrop`));
+                        for (const hdr of cHeader) {
+                            const hdrIdx = cHeader.indexOf(hdr);
+                            const hdrColor = randomHex();
+                            hdr.style.color = hdrColor;
+                            cZones[hdrIdx].style.backgroundColor = (hdrColor + "6f");
+                        }
+                    })
+                });
+                mu.observe(document.querySelector(`body`), {
+                    subtree: true,
+                    childList: true,
+                });
                 const prettied = sortedItems.map(e => ("" + e.category + "\n- " + ((e.values && e.values.length)? e.values.join("\n- ") : "[No Items in Category]")));
                 console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c"+prettied.join("\n\n"), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
             } else {
