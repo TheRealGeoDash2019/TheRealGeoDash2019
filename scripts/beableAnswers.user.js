@@ -51,7 +51,7 @@
                             const correctElem = element? element[0] : null;
                             if (correctElem && ("style" in correctElem)) {
                                 mu.disconnect();
-                                console.log(correctElem.parentNode);
+                                //console.log(correctElem.parentNode);
                                 correctElem.parentNode.style.background = (colorKey[parseInt(answer.slice(0, 1))]);
                             }
                         }
@@ -106,8 +106,7 @@
                 const prettied = sortedItems.map(e => ("" + e.category + "\n- " + ((e.values && e.values.length)? e.values.join("\n- ") : "[No Items in Category]")));
                 console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c"+prettied.join("\n\n"), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
             } else {
-                console.log("Unhandled Question:")
-                console.log(q);
+                console.log("Unhandled Question:", q);
             }
         }
     };
