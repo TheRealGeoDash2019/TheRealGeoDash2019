@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Beable Answers
 // @namespace    http://tampermonkey.net/
-// @version      0.0.12
+// @version      0.0.13
 // @description  Get free legit answers on Beable using Ancient Chinese Technique
 // @author       TheRealGeoDash
 // @match        *://*.beable.com/*
