@@ -106,7 +106,7 @@
                 const mu = new MutationObserver(function() {
                     const randomHex = ()=>("#"+Array.from(crypto.getRandomValues(new Uint8Array(3))).map(e => ((e > 200)?(e-200).toString(16).padStart(2, "0"):e.toString(16).padStart(2, "0"))).join(""));
                     document.awaitSelector("div.lrn_question").then(async () => {
-                        let colorKey = ["#eb403444", "#eb8c3444", "#ebcf3444", "#34eb7444"];
+                        let colorKey = ["#b33a0e", "#a68f1f", "#1f4aa6", "#6e1fa6"];
                         const cTable = document.querySelector(`table.lrn_classification_table`);
                         const cHeader = Array.from(cTable.querySelectorAll(`thead [scope="col"]`));
                         const cZones = Array.from(cTable.querySelectorAll(`tbody td.lrn_dragdrop`));
@@ -114,7 +114,7 @@
                             const hdrIdx = cHeader.indexOf(hdr);
                             const hdrColor = colorKey[hdrIdx];
                             hdr.style.color = hdrColor;
-                            cZones[hdrIdx].style.backgroundColor = (hdrColor);
+                            cZones[hdrIdx].style.backgroundColor = (hdrColor+"5f");
                         }
                     })
                 });
