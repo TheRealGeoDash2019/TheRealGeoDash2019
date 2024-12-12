@@ -14,10 +14,14 @@
 
 (function() {
     'use strict';
+    function htmlDecode(input) {
+        var doc = new DOMParser().parseFromString(input, "text/html");
+        return doc.documentElement.textContent;
+    }
     document.textSelector = function(selector, text) {
         var elements = document.querySelectorAll(selector);
         return Array.prototype.filter.call(elements, function(element){
-            return RegExp(text).test(element.textContent) || RegExp(text).test(element.innerHTML);
+            return RegExp(text).test(element.textContent) || RegExp(text).test(element.innerHTML) || RegExp(text).test(htmlDecode(element.textContent)) || RegExp(text).test(htmlDecode(element.innerHTML));
         });
     };
     document.awaitSelector = function(selector) {
@@ -68,11 +72,13 @@
                 const mu = new MutationObserver(function() {
                     document.awaitSelector("div.lrn_question").then(async () => {
                         for (const answer of correctAnswers) {
-                            const element = await document.textSelector(`.lrn_tokenhighlight_text span`, answer);
+                            const element = await document.textSelector(`.lrn_tokenhighlight_text > * > span:not(.behighlighted)`, answer);
                             const correctElem = element? element[0] : null;
                             if (correctElem && ("style" in correctElem)) {
                                 mu.disconnect();
                                 correctElem.style.fontWeight = "bolder";
+                                correctElem.style.backgroundColor = "#50248d10";
+                                correctElem.classList.add("behighlighted");
                             }
                         }
                     })
@@ -83,7 +89,7 @@
                 });
                 console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c-"+correctAnswers.join("\n\n- "), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
             } else if (q.type === "mcq") {
-                const correctAnswers = q.options.map(e => e.label).map((e, i) => (q.validation.valid_response.value.includes(i.toString())? e.replace(/&nbsp;/gmi, "") : null)).filter(e => e);
+                const correctAnswers = q.options.map((e, i) => (q.validation.valid_response.value.includes(e.value.toString())? e.label.replace(/&nbsp;/gmi, "") : null)).filter(e => e);
                 const mu = new MutationObserver(function() {
                     document.awaitSelector("div.lrn_question").then(async () => {
                         for (const answer of correctAnswers) {
@@ -92,6 +98,7 @@
                             if (correctElem && ("style" in correctElem)) {
                                 mu.disconnect();
                                 correctElem.style.fontWeight = "bolder";
+                                correctElem.parentNode.parentNode.style.backgroundColor = "#50248d10";
                             }
                         }
                     })
@@ -107,11 +114,11 @@
                     const randomHex = ()=>("#"+Array.from(crypto.getRandomValues(new Uint8Array(3))).map(e => ((e > 200)?(e-200).toString(16).padStart(2, "0"):e.toString(16).padStart(2, "0"))).join(""));
                     document.awaitSelector("div.lrn_question").then(async () => {
                         let colorKey = ["#b33a0e", "#a68f1f", "#1f4aa6", "#6e1fa6"];
-                        const cTable = document.querySelector(`table.lrn_classification_table`);
+                        const cTable = document.querySelector(`[id^="${q.response_id}"] table.lrn_classification_table`);
                         const cHeader = Array.from(cTable.querySelectorAll(`thead [scope="col"]`));
                         const cZones = Array.from(cTable.querySelectorAll(`tbody td.lrn_dragdrop`));
                         for (const hdr of cHeader) {
-                            const cAnsw = sortedItems.find(e => (e.category == hdr.innerText)) || null;
+                            const cAnsw = sortedItems.find(e => (e.category == hdr.innerText || e.category == hdr.textContent || htmlDecode(e.category) == htmlDecode(hdr.innerText) || htmlDecode(e.category)?.split?.(" ")?.join?.("")?.toLowerCase?.() == htmlDecode(hdr.innerText)?.split?.(" ")?.join?.("")?.toLowerCase?.())) || null;
                             const hdrIdx = cHeader.indexOf(hdr);
                             const hdrColor = colorKey[hdrIdx];
                             hdr.style.color = hdrColor;
