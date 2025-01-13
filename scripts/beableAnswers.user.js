@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Beable Answers
 // @namespace    http://tampermonkey.net/
-// @version      0.0.22
+// @version      0.0.23
 // @description  Get free legit answers on Beable using Ancient Chinese Technique
 // @author       TheRealGeoDash
 // @match        *://*.beable.com/*
@@ -144,9 +144,9 @@
                 console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c"+prettied.join("\n\n"), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
             } else if (q.type === "imageclozeassociationV2") {
                 const mu = new MutationObserver(function() {
-                    document.awaitSelector(`.jss201.readaloud-block`).then(async () => {
-                        const dropZones = Array.from(document.querySelectorAll(`.jss201.readaloud-block .lrn_imagecloze_response .lrn_dragdrop.lrn_dropzone`));
-                        const dropElements = Array.from(document.querySelectorAll(`.jss201.readaloud-block .lrn_btn_drag.lrn_draggable`));
+                    document.awaitSelector(`.jss201.readaloud-block [data-reference="${q.metadata.sheet_reference}"]`).then(async () => {
+                        const dropZones = Array.from(document.querySelectorAll(`.jss201.readaloud-block [data-reference="${q.metadata.sheet_reference}"] .lrn_imagecloze_response .lrn_dragdrop.lrn_dropzone`));
+                        const dropElements = Array.from(document.querySelectorAll(`.jss201.readaloud-block [data-reference="${q.metadata.sheet_reference}"] .lrn_btn_drag.lrn_draggable`));
                         
                         for (const element of dropElements) {
                             const elementIndex = dropElements.indexOf(element);
