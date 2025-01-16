@@ -81,7 +81,6 @@
                                 correctElem.style.fontWeight = "bolder";
                                 correctElem.style.backgroundColor = "#50248d10";
                                 correctElem.classList.add("behighlighted");
-                                correctElem.click();
                             }
                         }
                     })
