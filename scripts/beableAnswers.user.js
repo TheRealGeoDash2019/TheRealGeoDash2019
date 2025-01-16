@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Beable Answers
 // @namespace    http://tampermonkey.net/
-// @version      0.0.23
+// @version      0.0.24
 // @description  Get free legit answers on Beable using Ancient Chinese Technique
 // @author       TheRealGeoDash
 // @match        *://*.beable.com/*
@@ -21,7 +21,9 @@
     document.textSelector = function(selector, text) {
         var elements = document.querySelectorAll(selector);
         return Array.prototype.filter.call(elements, function(element){
-            return RegExp(text).test(element.textContent) || RegExp(text).test(element.innerHTML) || RegExp(text).test(htmlDecode(element.textContent)) || RegExp(text).test(htmlDecode(element.innerHTML));
+            const regexp = RegExp(text);
+            const regexp2 = RegExp(text.split(" ").join(""))
+            return regexp.test(element.textContent) || regexp.test(element.innerHTML) || regexp.test(htmlDecode(element.textContent)) || regexp.test(htmlDecode(element.innerHTML)) || regexp2.test(htmlDecode(element.innerHTML.split(" ").join(""))) || regexp2.test(htmlDecode(element.innerHTML));
         });
     };
     document.awaitSelector = function(selector) {
@@ -199,7 +201,8 @@
                     if (payload.id === requestId) {
                         return res(new Response(payload.responseText, {
                             status: payload.status,
-                            headers: new Headers(Object.fromEntries(payload.headers.split("\r\n").map(e => e.replace(":", "%SEPARATOR%").split("%SEPARATOR%")).filter(e => e[0])))
+                            headers: new Headers(Object.fromEntries(payload.headers.split("\r\n").map(e => e.replace(":", "%SEPARATOR%").split("%SEPARATOR%")).filter(e => e[0]))),
+                            url: url
                         }))
                     }
                 }
