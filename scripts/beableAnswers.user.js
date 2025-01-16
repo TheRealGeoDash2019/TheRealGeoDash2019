@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Beable Answers
 // @namespace    http://tampermonkey.net/
-// @version      0.0.25
+// @version      0.0.27
 // @description  Get free legit answers on Beable using Ancient Chinese Technique
 // @author       TheRealGeoDash
 // @match        *://*.beable.com/*
@@ -81,6 +81,7 @@
                                 correctElem.style.fontWeight = "bolder";
                                 correctElem.style.backgroundColor = "#50248d10";
                                 correctElem.classList.add("behighlighted");
+                                correctElem.click();
                             }
                         }
                     })
