@@ -101,6 +101,7 @@
                                 mu.disconnect();
                                 correctElem.style.fontWeight = "bolder";
                                 correctElem.parentNode.parentNode.style.backgroundColor = "#50248d10";
+                                correctElem.click();
                             }
                         }
                     })
@@ -131,6 +132,8 @@
                                     const correctElem = element? element[0] : null;
                                     if (correctElem && ("style" in correctElem)) {
                                         correctElem.style.backgroundColor = (hdrColor+"8f");
+                                        correctEleme.click();
+                                        cZones[hdrIdx].click();
                                         mu.disconnect();
                                     }
                                 }
