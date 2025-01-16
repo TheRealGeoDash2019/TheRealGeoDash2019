@@ -102,7 +102,7 @@
                                 mu.disconnect();
                                 correctElem.style.fontWeight = "bolder";
                                 correctElem.parentNode.parentNode.style.backgroundColor = "#50248d10";
-                                correctElem.click();
+                                setTimeout(() => correctElem.click(), 1000);
                             }
                         }
                     })
