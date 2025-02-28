@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Beable Answers
 // @namespace    http://tampermonkey.net/
-// @version      0.0.28
+// @version      0.0.30
 // @description  Get free legit answers on Beable using Ancient Chinese Technique
 // @author       TheRealGeoDash
 // @match        *://*.beable.com/*
@@ -81,6 +81,7 @@
                                 correctElem.style.fontWeight = "bolder";
                                 correctElem.style.backgroundColor = "#50248d10";
                                 correctElem.classList.add("behighlighted");
+                                correctElem.click();
                             }
                         }
                     })
@@ -111,7 +112,7 @@
                     childList: true,
                 });
                 console.log("%c"+q.stimulus.replace(/&nbsp;/gmi, "")+"\n\n%c- "+correctAnswers.join("\n- "), `font-size: 10px; color: #888888;`, `color: #44ff44; font-weight: bolder;`);
-            } else if (q.type === "classification") {
+            } else if (q.type === "classification" && q?.ui_style?.column_titles) {
                 const sortedItems = q.ui_style.column_titles.map((e, i) => ({category: e, values: q.validation.valid_response.value.map(e => e.map(e => q.possible_responses[e]))[i]}));
                 const mu = new MutationObserver(function() {
                     const randomHex = ()=>("#"+Array.from(crypto.getRandomValues(new Uint8Array(3))).map(e => ((e > 200)?(e-200).toString(16).padStart(2, "0"):e.toString(16).padStart(2, "0"))).join(""));
@@ -150,13 +151,27 @@
                     document.awaitSelector(`.jss201.readaloud-block [data-reference="${q.metadata.sheet_reference}"]`).then(async () => {
                         const dropZones = Array.from(document.querySelectorAll(`.jss201.readaloud-block [data-reference="${q.metadata.sheet_reference}"] .lrn_imagecloze_response .lrn_dragdrop.lrn_dropzone`));
                         const dropElements = Array.from(document.querySelectorAll(`.jss201.readaloud-block [data-reference="${q.metadata.sheet_reference}"] .lrn_btn_drag.lrn_draggable`));
-                        
+
                         for (const element of dropElements) {
                             const elementIndex = dropElements.indexOf(element);
                             element.click();
                             dropZones[elementIndex].click();
                             mu.disconnect();
                         };
+                    });
+                });
+                mu.observe(document.querySelector(`body`), {
+                    subtree: true,
+                    childList: true,
+                });
+            } else if (q.type === "shorttext") {
+                console.log(q);
+                const mu = new MutationObserver(function() {
+                    document.awaitSelector(`[id="${q.response_id}"] .lrn_textinput > input`).then(async () => {
+                        const inputField = document.querySelector(`[id="${q.response_id}"] .lrn_textinput > input`);
+
+                        inputField.setAttribute("placeholder", q.validation.valid_response.value);
+                        mu.disconnect();
                     });
                 });
                 mu.observe(document.querySelector(`body`), {
